@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 
 @Configuration
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public class SecurityConfig {
             .and()
             .csrf().disable()
             .authorizeRequests()
-            .requestMatchers("/h2/**").permitAll() // New Line: allows us to access the h2 console without the need to authenticate. ' ** '  instead of ' * ' because multiple path levels will follow /h2.
+            .requestMatchers(antMatcher("/h2/**")).permitAll() // New Line: allows us to access the h2 console without the need to authenticate. ' ** '  instead of ' * ' because multiple path levels will follow /h2.
             .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
             .anyRequest().authenticated()
             .and()
